@@ -119,6 +119,29 @@ def getIDMetaCronoFisica(codigo_meta_siconv):
         return id_meta[0]
     else:
         return 0
+    
+def getIDEtapaCronoFisica(codigo_etapa):
+    #connection = Connection()
+    db_connection = Connection.connect()
+
+    sql = "SELECT ID_Etapa_Crono_Fisico FROM Etapa_Crono_Fisico WHERE Codigo_Etapa = {cd_etapa}".format(cd_etapa = codigo_etapa)
+    #cursor = db_connection.cursor(buffered=True)
+    cursor = Connection.getBufferedCursor()
+    cursor.execute(sql)
+
+    etapa_encontrada = False
+    for (ID_Etapa) in cursor:
+        id_etapa = ID_Etapa
+        etapa_encontrada = True
+        break
+
+    #cursor.close()
+    db_connection.commit()
+
+    if etapa_encontrada:
+        return id_etapa[0]
+    else:
+        return 0
 
 def getIDEmpenho(codigo_empenho_siconv):
     db_connection = Connection.connect()
@@ -161,6 +184,28 @@ def getIDDesembolso(codigo_desembolso_siconv):
 
     if desembolso_encontrado:
         return id_desembolso[0]
+    else:
+        return 0
+    
+def getIDLicitacao(codigo_licitacao_siconv):
+    db_connection = Connection.connect()
+
+    sql = "SELECT ID_Licitacao FROM Licitacao WHERE Codigo_Licitacao_Siconv = {cd_licitacao_siconv}".format(cd_licitacao_siconv = codigo_licitacao_siconv)
+    #cursor = db_connection.cursor(buffered=True)
+    cursor = Connection.getBufferedCursor()
+    cursor.execute(sql)
+
+    licitacao_encontrada = False
+    for (ID_Licitacao) in cursor:
+        id_licitacao = ID_Licitacao
+        licitacao_encontrada = True
+        break
+
+    #cursor.close()
+    db_connection.commit()
+
+    if licitacao_encontrada:
+        return id_licitacao[0]
     else:
         return 0
 
